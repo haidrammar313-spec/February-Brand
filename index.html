@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEBRUARY - Premium Clothing Brand</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-login, .btn-signup {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-login:hover {
+            background: white;
+            color: #1a1a1a;
+        }
+
+        .btn-signup {
+            background: #ffd700;
+            color: #1a1a1a;
+        }
+
+        .btn-signup:hover {
+            background: #ffed4e;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('IMAGES FOR MY WEB/download (1).jfif') center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            padding: 1rem 3rem;
+            background: #ffd700;
+            color: #1a1a1a;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .hero-btn:hover {
+            background: #ffed4e;
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .products {
+            margin: 4rem 0;
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            border: none;
+            background: none;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #1a1a1a;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            clear: both;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: #ffd700;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-submit:hover {
+            background: #ffed4e;
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .form-toggle a {
+            color: #ffd700;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .user-menu {
+            display: none;
+            position: relative;
+        }
+
+        .user-menu.active {
+            display: block;
+        }
+
+        .user-name {
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            color: #1a1a1a;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            min-width: 150px;
+        }
+
+        .dropdown-menu a, .dropdown-menu button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #1a1a1a;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .dropdown-menu a:hover, .dropdown-menu button:hover {
+            background: #f0f0f0;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        .about-section {
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo">FEBRUARY</div>
+        <nav>
+            <a onclick="scrollToSection('products')">Shop</a>
+            <a onclick="scrollToSection('about')">About</a>
+            <a href="#">Contact</a>
+            <div class="auth-buttons">
+                <div id="authButtons" class="auth-buttons">
+                    <button class="btn-login" onclick="openLoginModal()">Log In</button>
+                    <button class="btn-signup" onclick="openSignupModal()">Sign Up</button>
+                </div>
+                <div id="userMenu" class="user-menu">
+                    <div class="user-name" onclick="toggleDropdown()">
+                        <span id="userName">User</span> ▼
+                    </div>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="#" onclick="openProfile()">My Profile</a>
+                        <a href="#" onclick="openOrders()">My Orders</a>
+                        <button onclick="logout()">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>FEBRUARY FASHION</h1>
+            <p>Elevate Your Style</p>
+            <button class="hero-btn" onclick="scrollToSection('products')">Shop Now</button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <div class="container">
+        <section class="products" id="products">
+            <h2>Our Collections</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image"><img src="IMAGES FOR MY WEB/download (1).jfif" alt="Classic T-Shirt"></div>
+                    <div class="product-info">
+                        <div class="product-name">Classic T-Shirt</div>
+                        <div class="product-price">$25.00</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img src="IMAGES FOR MY WEB/download (2).jfif" alt="Slim Fit Jeans"></div>
+                    <div class="product-info">
+                        <div class="product-name">Slim Fit Jeans</div>
+                        <div class="product-price">$25.00</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img src="IMAGES FOR MY WEB/download (4).jfif" alt="Designer Jacket"></div>
+                    <div class="product-info">
+                        <div class="product-name">Designer Jacket</div>
+                        <div class="product-price">$25.00</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img src="IMAGES FOR MY WEB/download (5).jfif" alt="Summer Dress"></div>
+                    <div class="product-info">
+                        <div class="product-name">Summer Dress</div>
+                        <div class="product-price">$25.00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About FEBRUARY</h2>
+                <p>Welcome to FEBRUARY, your premier destination for premium fashion and quality clothing. Since our founding, we've been committed to providing stylish, affordable apparel for everyone.</p>
+                <p>Our mission is to make fashion accessible without compromising on quality. Every piece in our collection is carefully selected to ensure comfort, durability, and timeless style.</p>
+                <p>We believe that everyone deserves to feel confident and beautiful in what they wear. Whether you're looking for casual everyday wear or special occasion outfits, FEBRUARY has something perfect for you.</p>
+                <p>With competitive prices and exceptional customer service, FEBRUARY is your go-to brand for fashion that fits your lifestyle and budget.</p>
+            </div>
+            <div class="about-image">
+                <img src="IMAGES FOR MY WEB/lấy = cre.jfif" alt="FEBRUARY Fashion Collection">
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeLoginModal()">&times;</button>
+            <h2 class="modal-title">Log In</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" name="email" required placeholder="your@email.com">
+                    <span class="error" id="loginEmailError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                    <span class="error" id="loginPasswordError"></span>
+                </div>
+                <button type="submit" class="form-submit">Log In</button>
+                <div class="form-toggle">
+                    Don't have an account? <a onclick="switchToSignup()">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeSignupModal()">&times;</button>
+            <h2 class="modal-title">Sign Up</h2>
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" name="name" required placeholder="Your Full Name">
+                    <span class="error" id="signupNameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" name="email" required placeholder="your@email.com">
+                    <span class="error" id="signupEmailError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required placeholder="Create a password">
+                    <span class="error" id="signupPasswordError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                    <span class="error" id="confirmPasswordError"></span>
+                </div>
+                <button type="submit" class="form-submit">Sign Up</button>
+                <div class="form-toggle">
+                    Already have an account? <a onclick="switchToLogin()">Log In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 FEBRUARY - Premium Clothing Brand. All rights reserved.</p>
+        <p>Contact: aura313aura@gmail.com | Phone: 1-800-FEBRUARY</p>
+    </footer>
+
+    <script>
+        // Load user data from localStorage
+        function loadUser() {
+            const user = localStorage.getItem('currentUser');
+            if (user) {
+                showUserMenu(JSON.parse(user));
+            }
+        }
+
+        // Login Modal Functions
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+            clearLoginErrors();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+            clearLoginErrors();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            clearLoginErrors();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simple validation
+            if (!email) {
+                document.getElementById('loginEmailError').textContent = 'Email is required';
+                return;
+            }
+
+            if (!password) {
+                document.getElementById('loginPasswordError').textContent = 'Password is required';
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('loginPasswordError').textContent = 'Password must be at least 6 characters';
+                return;
+            }
+
+            // Check if user exists in localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showUserMenu(user);
+                closeLoginModal();
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                alert('Welcome back, ' + user.name + '!');
+            } else {
+                document.getElementById('loginEmailError').textContent = 'Invalid email or password';
+            }
+        }
+
+        function clearLoginErrors() {
+            document.getElementById('loginEmailError').textContent = '';
+            document.getElementById('loginPasswordError').textContent = '';
+        }
+
+        // Sign Up Modal Functions
+        function openSignupModal() {
+            document.getElementById('signupModal').classList.add('active');
+            clearSignupErrors();
+        }
+
+        function closeSignupModal() {
+            document.getElementById('signupModal').classList.remove('active');
+            clearSignupErrors();
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            clearSignupErrors();
+
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validation
+            if (!name) {
+                document.getElementById('signupNameError').textContent = 'Name is required';
+                return;
+            }
+
+            if (!email) {
+                document.getElementById('signupEmailError').textContent = 'Email is required';
+                return;
+            }
+
+            if (!email.includes('@')) {
+                document.getElementById('signupEmailError').textContent = 'Please enter a valid email';
+                return;
+            }
+
+            if (!password) {
+                document.getElementById('signupPasswordError').textContent = 'Password is required';
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('signupPasswordError').textContent = 'Password must be at least 6 characters';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                return;
+            }
+
+            // Check if email already exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.find(u => u.email === email)) {
+                document.getElementById('signupEmailError').textContent = 'Email already registered';
+                return;
+            }
+
+            // Create new user
+            const newUser = { name, email, password, registeredDate: new Date().toLocaleDateString() };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+            showUserMenu(newUser);
+            closeSignupModal();
+            document.getElementById('signupName').value = '';
+            document.getElementById('signupEmail').value = '';
+            document.getElementById('signupPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            alert('Welcome to FEBRUARY, ' + name + '! Your account has been created.');
+        }
+
+        function clearSignupErrors() {
+            document.getElementById('signupNameError').textContent = '';
+            document.getElementById('signupEmailError').textContent = '';
+            document.getElementById('signupPasswordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+        }
+
+        // Switch between Login and Sign Up
+        function switchToSignup() {
+            closeLoginModal();
+            openSignupModal();
+        }
+
+        function switchToLogin() {
+            closeSignupModal();
+            openLoginModal();
+        }
+
+        // User Menu Functions
+        function showUserMenu(user) {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('userMenu').classList.add('active');
+            document.getElementById('userName').textContent = user.name;
+        }
+
+        function toggleDropdown() {
+            document.getElementById('dropdownMenu').style.display = 
+                document.getElementById('dropdownMenu').style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            document.getElementById('userMenu').classList.remove('active');
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('dropdownMenu').style.display = 'none';
+            alert('You have been logged out.');
+        }
+
+        function openProfile() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            alert('Profile:\n\nName: ' + user.name + '\nEmail: ' + user.email + '\nMember Since: ' + user.registeredDate);
+        }
+
+        function openOrders() {
+            alert('You have no orders yet. Start shopping to place your first order!');
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === signupModal) {
+                closeSignupModal();
+            }
+
+            // Close dropdown when clicking elsewhere
+            if (event.target.id !== 'userName' && event.target.parentElement.id !== 'userMenu') {
+                document.getElementById('dropdownMenu').style.display = 'none';
+            }
+        }
+
+        // Load user on page load
+        window.addEventListener('load', loadUser);
+    </script>
+</body>
+</html>
